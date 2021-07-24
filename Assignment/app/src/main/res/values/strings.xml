@@ -1,4 +1,10 @@
 <resources>
-    <string name="app_name">NoBroker</string>
+    <string name="app_name">Record</string>
     <string name="search">Search Title or Description</string>
+    <string name="item_details">Item Details</string>
+    <string name="title_1">Title 1</string>
+    <string name="dummy_text">Lorem Ipsum is simply dummy text Lorem Ipsum is simply dummy text</string>
+    <string name="title_name">Title Name</string>
+    <string name="subtitle_name">subTitle Name</string>
+    <string name="subtitle">SubTitle</string>
 </resources>

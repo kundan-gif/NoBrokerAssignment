@@ -9,24 +9,29 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-
+/**
+ * ViewModel class is responsible for interacting with the repository class
+ */
 class MyViewModel(
     private val repository: MyRepository
 ) : ViewModel() {
 
-    fun insertPosts(){
+
+    fun insertPosts() {
 
         CoroutineScope(Dispatchers.IO).launch {
             repository.insertPosts()
         }
     }
+
     fun getPosts(): LiveData<List<MyEntity>> {
         return repository.getPosts()
     }
 
-    fun getCount():Int{
+    fun getCount(): Int {
         return repository.getCount()
     }
+
     fun searchDatabase(searchQuery: String): LiveData<List<MyEntity>> {
         return repository.searchDatabase(searchQuery).asLiveData()
     }

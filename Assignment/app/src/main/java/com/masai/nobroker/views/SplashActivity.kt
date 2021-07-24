@@ -35,7 +35,7 @@ class SplashActivity : AppCompatActivity() {
             }
             override fun onAnimationEnd(animation: Animation?) {
                 Handler(Looper.getMainLooper()).postDelayed({
-                    startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+                    startActivity(Intent(this@SplashActivity, ItemListActivity::class.java))
                     finish()
                 }, 3000)
             }

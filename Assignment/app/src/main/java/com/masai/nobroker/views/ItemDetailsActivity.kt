@@ -1,6 +1,5 @@
 package com.masai.nobroker.views
 
-import android.annotation.SuppressLint
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
@@ -16,15 +15,20 @@ class ItemDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_item_details)
         setupActionBar()
-        statuscolor()
-        if(intent.extras!=null){
+        statusBarColor()
+
+        /**
+         * Setting the data which we are getting from ItemList.
+         */
+        if (intent.extras != null) {
             val byteArray = intent.getByteArrayExtra("imageKey")
             val bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray!!.size)
             ivImage.setImageBitmap(bmp)
-            tvTitle.text=intent.getStringExtra("titleKey")
-            tvSubTitle.text=intent.getStringExtra("subTitleKey")
+            tvTitle.text = intent.getStringExtra("titleKey")
+            tvSubTitle.text = intent.getStringExtra("subTitleKey")
         }
     }
+
     /**
      * A function for actionBar Setup.
      */
@@ -38,7 +42,11 @@ class ItemDetailsActivity : AppCompatActivity() {
 
         toolbar_item_details_activity.setNavigationOnClickListener { onBackPressed() }
     }
-    fun statuscolor() {
+
+    /**
+     * A function for statusBar color.
+     */
+    private fun statusBarColor() {
         if (Build.VERSION.SDK_INT >= 23) {
             val window = this.window
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)

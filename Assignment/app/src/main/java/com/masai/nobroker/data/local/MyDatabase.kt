@@ -9,12 +9,21 @@ import androidx.room.TypeConverters
 @Database(entities = [MyEntity::class], version = 1)
 @TypeConverters(Converters::class)
 abstract class MyDatabase : RoomDatabase() {
+
+
+    /**
+     * This function will used for initialize the Dao class
+     */
     abstract fun getMyDao(): MyDao
 
     companion object {
 
         private var INSTANCE: MyDatabase? = null
 
+
+        /**
+         * This function return the database reference
+         */
         fun getDatabase(context: Context): MyDatabase {
             if (INSTANCE == null) {
                 val builder = Room.databaseBuilder(

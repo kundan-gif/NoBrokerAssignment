@@ -23,7 +23,7 @@
         <activity
             android:name=".views.ItemDetailsActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
-        <activity android:name=".views.MainActivity">
+        <activity android:name=".views.ItemListActivity">
         </activity>
     </application>
 
