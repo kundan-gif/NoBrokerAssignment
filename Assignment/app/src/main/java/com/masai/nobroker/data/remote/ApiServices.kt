@@ -12,7 +12,7 @@ const val BASE_URL="https://api.jsonbin.io/"
 interface ApiInterface{
 
     @GET("b/60fa8fefa917050205ce5470")
-    fun getPost() : Call<MyResponse>
+    fun getPost() : MyResponse
 }
 object ApiServices {
     val instance:ApiInterface
