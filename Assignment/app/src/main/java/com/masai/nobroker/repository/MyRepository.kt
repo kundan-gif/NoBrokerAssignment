@@ -1,13 +1,15 @@
 package com.masai.nobroker.repository
 
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.lifecycle.LiveData
 import com.masai.nobroker.data.local.MyDao
 import com.masai.nobroker.data.local.MyEntity
 import com.masai.nobroker.data.remote.ApiServices
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 import java.net.URL
 
 class MyRepository(private val myDao: MyDao) {
@@ -28,8 +30,10 @@ class MyRepository(private val myDao: MyDao) {
         val image:Bitmap=BitmapFactory.decodeStream(mUrl.openConnection().getInputStream())
         return image
     }
-    fun getCount():Int{
-        return myDao.count()
+    fun getCount():Int {
+
+            return myDao.count()
+
     }
     fun searchDatabase(searchQuery: String): Flow<List<MyEntity>> {
         return myDao.searchDatabase(searchQuery)

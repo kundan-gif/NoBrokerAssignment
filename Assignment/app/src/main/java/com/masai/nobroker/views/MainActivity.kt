@@ -1,5 +1,7 @@
 package com.masai.nobroker.views
 
+import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.Menu
 import android.widget.Toast
@@ -16,6 +18,7 @@ import com.masai.nobroker.views.adapter.PostAdapter
 import com.masai.nobroker.views.interfaces.ItemClickListener
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
+import java.io.ByteArrayOutputStream
 
 
 class MainActivity : AppCompatActivity(),ItemClickListener,SearchView.OnQueryTextListener{
@@ -28,15 +31,16 @@ class MainActivity : AppCompatActivity(),ItemClickListener,SearchView.OnQueryTex
         adapter2=PostAdapter(this@MainActivity,entity,this)
         recyclerView.layoutManager= LinearLayoutManager(this)
         recyclerView.adapter=adapter2
-        val app=application as ApplicationClass
-        val viewModelFactory= MyViewModelFactory(app.repository)
-        viewModel= ViewModelProviders.of(this,viewModelFactory).get(MyViewModel::class.java)
-        viewModel.getPosts().observe(this, Observer {
-            entity.clear()
-            entity.addAll(it)
-            adapter2.notifyDataSetChanged()
+         val app = application as ApplicationClass
+         val viewModelFactory = MyViewModelFactory(app.repository)
+            viewModel = ViewModelProviders.of(this, viewModelFactory).get(MyViewModel::class.java)
+            viewModel.getPosts().observe(this, Observer {
+                entity.clear()
+                entity.addAll(it)
+                adapter2.notifyDataSetChanged()
 
-        })
+            })
+
         CoroutineScope(Dispatchers.IO).launch {
             if(viewModel.getCount()==0) {
                 viewModel.insertPosts()
@@ -45,7 +49,14 @@ class MainActivity : AppCompatActivity(),ItemClickListener,SearchView.OnQueryTex
     }
 
     override fun onItemClicked(myEntity: MyEntity) {
-       Toast.makeText(this,myEntity.title,Toast.LENGTH_LONG).show()
+        val stream = ByteArrayOutputStream()
+        myEntity.image.compress(Bitmap.CompressFormat.PNG, 100, stream)
+        val byteArray: ByteArray = stream.toByteArray()
+       val intent=Intent(this@MainActivity,ItemDetailsActivity::class.java)
+        intent.putExtra("imageKey",byteArray)
+        intent.putExtra("titleKey",myEntity.title)
+        intent.putExtra("subTitleKey",myEntity.subTitle)
+        startActivity(intent)
     }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
@@ -71,12 +82,12 @@ class MainActivity : AppCompatActivity(),ItemClickListener,SearchView.OnQueryTex
 
     private fun searchDatabase(query: String) {
         val searchQuery = "%$query%"
-
         viewModel.searchDatabase(searchQuery).observe(this, { list ->
             list.let {
                 adapter2.setData(it)
             }
         })
     }
+
 
 }
