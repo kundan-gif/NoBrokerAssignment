@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.masai.nobroker.R
 import com.masai.nobroker.data.local.MyEntity
 import com.masai.nobroker.views.interfaces.ItemClickListener
@@ -22,7 +21,7 @@ class PostAdapter(val context: Context,val postList:List<MyEntity>,val listner: 
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
        holder.itemView.apply {
-           Glide.with(context).load(postList[position].image).into(image)
+         image.setImageBitmap(postList[position].image)
          title.text= postList[position].title
            subTitle.text=postList[position].subTitle
        }

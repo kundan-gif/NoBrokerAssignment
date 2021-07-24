@@ -10,6 +10,6 @@ class ApplicationClass:Application() {
         roomDatabase.getMyDao()
     }
     val repository:MyRepository by lazy {
-        MyRepository(myDao)
+        MyRepository(applicationContext,myDao)
     }
 }
