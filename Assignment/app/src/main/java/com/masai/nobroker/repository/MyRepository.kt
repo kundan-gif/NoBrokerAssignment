@@ -9,7 +9,7 @@ class MyRepository(val myDao: MyDao) {
     val api= ApiServices.instance
    suspend fun insertPosts(){
       val result=api.getPost()
-       for (i in 0..result.size) {
+       for (i in 0 until result.size) {
            val myEntity = MyEntity(result[i].image, result[i].title, result[i].subTitle)
            myDao.insertPosts(myEntity)
        }

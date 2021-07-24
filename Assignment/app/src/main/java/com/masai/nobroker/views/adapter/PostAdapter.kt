@@ -1,0 +1,37 @@
+package com.masai.nobroker.views.adapter
+
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.masai.nobroker.R
+import com.masai.nobroker.data.local.MyEntity
+import com.masai.nobroker.views.interfaces.ItemClickListener
+import kotlinx.android.synthetic.main.item_layout.view.*
+
+class PostAdapter(val context: Context,val postList:List<MyEntity>,val listner: ItemClickListener):RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
+
+    inner class PostViewHolder(itemView:View):RecyclerView.ViewHolder(itemView)
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
+        val view=LayoutInflater.from(parent.context).inflate(R.layout.item_layout,parent,false)
+        return PostViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
+       holder.itemView.apply {
+           Glide.with(context).load(postList[position].image).into(image)
+         title.text= postList[position].title
+           subTitle.text=postList[position].subTitle
+       }
+        holder.itemView.setOnClickListener {
+            listner.onItemClicked(postList[position])
+        }
+    }
+
+    override fun getItemCount(): Int {
+       return postList.size
+    }
+}
