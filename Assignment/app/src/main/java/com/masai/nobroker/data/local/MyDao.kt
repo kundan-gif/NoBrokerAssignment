@@ -13,4 +13,10 @@ interface MyDao {
 
     @Query("select * from my_post_table")
     fun getPosts(): LiveData<List<MyEntity>>
+
+    @Query("SELECT COUNT(*) FROM my_post_table")
+    fun count(): Int
+
+
+
 }

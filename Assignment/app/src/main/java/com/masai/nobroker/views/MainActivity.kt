@@ -1,8 +1,9 @@
 package com.masai.nobroker.views
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,8 +11,8 @@ import com.masai.nobroker.R
 import com.masai.nobroker.data.local.MyEntity
 import com.masai.nobroker.viewmodels.MyViewModel
 import com.masai.nobroker.viewmodels.MyViewModelFactory
-import com.masai.nobroker.views.interfaces.ItemClickListener
 import com.masai.nobroker.views.adapter.PostAdapter
+import com.masai.nobroker.views.interfaces.ItemClickListener
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -31,16 +32,15 @@ class MainActivity : AppCompatActivity(),ItemClickListener{
         val viewModelFactory= MyViewModelFactory(app.repository)
         viewModel= ViewModelProviders.of(this,viewModelFactory).get(MyViewModel::class.java)
         viewModel.getPosts().observe(this, Observer {
-           entity.clear()
+            entity.clear()
             entity.addAll(it)
             adapter2.notifyDataSetChanged()
 
         })
         CoroutineScope(Dispatchers.IO).launch {
-            if(entity.size==0) {
+            if(viewModel.getCount()==0) {
                 viewModel.insertPosts()
             }
-
         }
 
     }

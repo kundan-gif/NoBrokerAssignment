@@ -12,4 +12,5 @@ class ApplicationClass:Application() {
     val repository:MyRepository by lazy {
         MyRepository(applicationContext,myDao)
     }
+
 }

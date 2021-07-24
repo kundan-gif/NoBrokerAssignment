@@ -27,4 +27,7 @@ class MyRepository(private val context: Context, private val myDao: MyDao) {
         val image:Bitmap=BitmapFactory.decodeStream(mUrl.openConnection().getInputStream())
         return image
     }
+    fun getCount():Int{
+        return myDao.count()
+    }
 }

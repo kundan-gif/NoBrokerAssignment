@@ -21,4 +21,7 @@ class MyViewModel(
     fun getPosts(): LiveData<List<MyEntity>> {
         return repository.getPosts()
     }
+    fun getCount():Int{
+        return repository.getCount()
+    }
 }
