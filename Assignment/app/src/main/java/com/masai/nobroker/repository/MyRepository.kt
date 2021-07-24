@@ -7,9 +7,10 @@ import androidx.lifecycle.LiveData
 import com.masai.nobroker.data.local.MyDao
 import com.masai.nobroker.data.local.MyEntity
 import com.masai.nobroker.data.remote.ApiServices
+import kotlinx.coroutines.flow.Flow
 import java.net.URL
 
-class MyRepository(private val context: Context, private val myDao: MyDao) {
+class MyRepository(private val myDao: MyDao) {
     val api= ApiServices.instance
    suspend fun insertPosts(){
       val result=api.getPost()
@@ -22,12 +23,15 @@ class MyRepository(private val context: Context, private val myDao: MyDao) {
     fun getPosts(): LiveData<List<MyEntity>> {
         return myDao.getPosts()
     }
-    fun gettingBitmap(url:String):Bitmap{
+    private fun gettingBitmap(url:String):Bitmap{
         val mUrl=URL(url)
         val image:Bitmap=BitmapFactory.decodeStream(mUrl.openConnection().getInputStream())
         return image
     }
     fun getCount():Int{
         return myDao.count()
+    }
+    fun searchDatabase(searchQuery: String): Flow<List<MyEntity>> {
+        return myDao.searchDatabase(searchQuery)
     }
 }

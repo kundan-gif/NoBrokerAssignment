@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">NoBroker</string>
+    <string name="search">Search Title or Description</string>
 </resources>

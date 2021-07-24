@@ -10,8 +10,7 @@ import com.masai.nobroker.data.local.MyEntity
 import com.masai.nobroker.views.interfaces.ItemClickListener
 import kotlinx.android.synthetic.main.item_layout.view.*
 
-class PostAdapter(val context: Context,val postList:List<MyEntity>,val listner: ItemClickListener):RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
-
+class PostAdapter(val context: Context, var postList:List<MyEntity>, val listner: ItemClickListener):RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
     inner class PostViewHolder(itemView:View):RecyclerView.ViewHolder(itemView)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
@@ -32,5 +31,9 @@ class PostAdapter(val context: Context,val postList:List<MyEntity>,val listner: 
 
     override fun getItemCount(): Int {
        return postList.size
+    }
+    fun setData(newData: List<MyEntity>){
+        postList = newData
+        notifyDataSetChanged()
     }
 }
