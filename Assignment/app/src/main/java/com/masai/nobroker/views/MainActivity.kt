@@ -3,13 +3,17 @@ package com.masai.nobroker.views
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.Menu
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.facebook.shimmer.ShimmerFrameLayout
 import com.masai.nobroker.R
 import com.masai.nobroker.data.local.MyEntity
 import com.masai.nobroker.viewmodels.MyViewModel
@@ -25,9 +29,11 @@ class MainActivity : AppCompatActivity(),ItemClickListener,SearchView.OnQueryTex
     private lateinit var viewModel: MyViewModel
     lateinit var adapter2: PostAdapter
     val entity= mutableListOf<MyEntity>()
+    lateinit var shrimmerView: ShimmerFrameLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        shrimmerView=findViewById(R.id.shimmer_view_container)
         adapter2=PostAdapter(this@MainActivity,entity,this)
         recyclerView.layoutManager= LinearLayoutManager(this)
         recyclerView.adapter=adapter2
@@ -35,10 +41,13 @@ class MainActivity : AppCompatActivity(),ItemClickListener,SearchView.OnQueryTex
          val viewModelFactory = MyViewModelFactory(app.repository)
             viewModel = ViewModelProviders.of(this, viewModelFactory).get(MyViewModel::class.java)
             viewModel.getPosts().observe(this, Observer {
-                entity.clear()
-                entity.addAll(it)
-                adapter2.notifyDataSetChanged()
-
+                Handler(Looper.getMainLooper()).postDelayed({
+                    entity.clear()
+                    entity.addAll(it)
+                    adapter2.notifyDataSetChanged()
+                    shrimmerView.stopShimmer()
+                    shrimmerView.visibility=View.GONE
+                },3000)
             })
 
         CoroutineScope(Dispatchers.IO).launch {
